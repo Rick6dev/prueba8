@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Coffe&Wifi</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+		<link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='images/coffe_icon.ico') }}"
+    />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="logo">
+							<span class="icon fa-gem"></span>
+						</div>
+						<div class="content">
+							<div class="inner">
+								<h1>Coffee & Wifi</h1>
+								<p>Welcome to the Coffee & Wifi WebSite</p>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#view">View</a></li>
+								<!-- <li><a href="#work">Work</a></li> -->
+								<!-- <li><a href="#about">About</a></li> -->
+								<li><a href="#add">Add</a></li>
+								<!--<li><a href="#elements">Elements</a></li>-->
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Intro -->
+						<article id="view">
+							<h2 class="major">View Coffees</h2>
+							{% for cafe in cafes %}
+							<div class="cafe-card">
+								<span class="image main">
+									<img src="{{ cafe.img_url }}" alt="Image of {{ cafe.name }}" />
+								</span>
+								<h3>{{ cafe.name }}</h3>
+								<p>Location: {{ cafe.location }}</p>
+								<p>Seats: {{ cafe.seats }}</p>
+								<p>Has Toilet: {{ 'Yes' if cafe.has_toilet else 'No' }}</p>
+								<p>Has Wi-Fi: {{ 'Yes' if cafe.has_wifi else 'No' }}</p>
+								<p>Has Sockets: {{ 'Yes' if cafe.has_sockets else 'No' }}</p>
+								<p>Can Take Calls: {{ 'Yes' if cafe.can_take_calls else 'No' }}</p>
+								<p>Coffee Price: {{ cafe.coffe_price }}</p>
+								<a href="{{ cafe.map_url }}" target="_blank">View on Map</a>
+								<!-- Enlace para eliminar el café -->
+								<a href="{{ url_for('delete_coffee', cafe_id=cafe.id) }}" class="delete-link">Delete Cafe</a>
+							</div>
+							{% endfor %}
+						</article>
+
+						<!-- Work -->
+							<!-- <article id="work">
+								<h2 class="major">Work</h2>
+								<span class="image main"><img src="{{ url_for('static', filename='images/pic02.jpg') }}" alt="" /></span>
+								<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
+								<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>
+							</article> -->
+
+						<!-- About -->
+							<!-- <article id="about">
+								<h2 class="major">About</h2>
+								<span class="image main"><img src="{{ url_for('static', filename='images/pic03.jpg') }}" alt="" /></span>
+								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+							</article>  -->
+
+						<!-- Contact -->
+						<article id="add">
+							<h2 class="major">Add Coffe</h2>
+							<form method="post" action="{{ url_for('add_cafe') }}">
+								<div class="fields">
+									<div class="field half">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" required />
+									</div>
+									<div class="field half">
+										<label for="map_url">Map URL</label>
+										<input type="text" name="map_url" id="map_url" required />
+									</div>
+									<div class="field half">
+										<label for="img_url">Image URL</label>
+										<input type="text" name="img_url" id="img_url" required />
+									</div>
+									<div class="field half">
+										<label for="location">Location</label>
+										<input type="text" name="location" id="location" required />
+									</div>
+									<div class="field half">
+										<label for="seats">Seats</label>
+										<input type="text" name="seats" id="seats" required />
+									</div>
+									<div class="field half">
+										<label for="has_toilet">Has Toilet</label>
+										<select name="has_toilet" id="has_toilet" required>
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+									</div>
+									<div class="field half">
+										<label for="has_wifi">Has Wi-Fi</label>
+										<select name="has_wifi" id="has_wifi" required>
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+									</div>
+									<div class="field half">
+										<label for="has_sockets">Has Sockets</label>
+										<select name="has_sockets" id="has_sockets" required>
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+									</div>
+									<div class="field half">
+										<label for="can_take_calls">Can Take Calls</label>
+										<select name="can_take_calls" id="can_take_calls" required>
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+									</div>
+									<div class="field half">
+										<label for="coffee_price">Coffee Price</label>
+										<input type="text" name="coffee_price" id="coffee_price" required />
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Add Coffee" class="primary" /></li>
+									<li><input type="reset" value="Reset" /></li>
+								</ul>
+							</form>
+						</article>
+						
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Ricardo Torres <a href="https://html5up.net">Portafolio</a>.</p>
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+	</body>
+</html>
